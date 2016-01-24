@@ -17,15 +17,15 @@ public class PlayerControler : MonoBehaviour {
 		float speed = 10.0f;
 
 		if (Input.GetKey (KeyCode.LeftArrow)) { // Left movement
-			gameObject.transform.position += new Vector3 (-speed * Time.deltaTime, 0, 0);
+			gameObject.transform.position += Vector3.left * speed * Time.deltaTime;
 		} else if (Input.GetKey (KeyCode.RightArrow)) { // Right movement
-			gameObject.transform.position += new Vector3 (speed * Time.deltaTime, 0, 0);
+			gameObject.transform.position += Vector3.right * speed * Time.deltaTime;
 		}
 
 		if (Input.GetKey (KeyCode.UpArrow)) { // Up movement
-			gameObject.transform.position += new Vector3 (0, speed * Time.deltaTime, 0);
+			gameObject.transform.position += Vector3.up * speed * Time.deltaTime;
 		} else if (Input.GetKey (KeyCode.DownArrow)) { // Down movement
-			gameObject.transform.position += new Vector3(0, -speed * Time.deltaTime, 0);
+			gameObject.transform.position += Vector3.down * speed * Time.deltaTime;
 		}
 	}
 }
