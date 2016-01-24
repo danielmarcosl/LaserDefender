@@ -14,48 +14,18 @@ public class PlayerControler : MonoBehaviour {
 	}
 
 	void movement() {
-		Vector3 pos = new Vector3 (this.transform.position.x, this.transform.position.y, 0f);
-		// Movement by key press once
-		// Left movement, key press once
-		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			pos.x -= 0.25f;
-			gameObject.transform.position = pos;
+		float speed = 10.0f;
+
+		if (Input.GetKey (KeyCode.LeftArrow)) { // Left movement
+			gameObject.transform.position += new Vector3 (-speed * Time.deltaTime, 0, 0);
+		} else if (Input.GetKey (KeyCode.RightArrow)) { // Right movement
+			gameObject.transform.position += new Vector3 (speed * Time.deltaTime, 0, 0);
 		}
-		// Right movement, key press once
-		if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			pos.x += 0.25f;
-			gameObject.transform.position = pos;
-		}
-		// Up movement, key press once
-		if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			pos.y += 0.25f;
-			gameObject.transform.position = pos;
-		}
-		// Down movement, key press once
-		if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			pos.y -= 0.25f;
-			gameObject.transform.position = pos;
-		}
-		// Movement by key hold down
-		// Left movement, key hold down
-		if (Input.GetKey (KeyCode.LeftArrow)) {
-			pos.x -= 0.05f;
-			gameObject.transform.position = pos;
-		}
-		// Right movement, key hold down
-		if (Input.GetKey (KeyCode.RightArrow)) {
-			pos.x += 0.05f;
-			gameObject.transform.position = pos;
-		}
-		// Up movemnet, key hold down
-		if (Input.GetKey (KeyCode.UpArrow)) {
-			pos.y += 0.05f;
-			gameObject.transform.position = pos;
-		}
-		// Down movement, key hold down
-		if (Input.GetKey (KeyCode.DownArrow)) {
-			pos.y -= 0.05f;
-			gameObject.transform.position = pos;
+
+		if (Input.GetKey (KeyCode.UpArrow)) { // Up movement
+			gameObject.transform.position += new Vector3 (0, speed * Time.deltaTime, 0);
+		} else if (Input.GetKey (KeyCode.DownArrow)) { // Down movement
+			gameObject.transform.position += new Vector3(0, -speed * Time.deltaTime, 0);
 		}
 	}
 }
