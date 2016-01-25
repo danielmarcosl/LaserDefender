@@ -4,9 +4,9 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour {
 
 	public GameObject enemyPrefab;
-	public float width = 10f;
-	public float height = 5f;
-	public float speed = 10f;
+	public float width;
+	public float height;
+	public float speed;
 
 	private bool movingRight = true;
 	private float xmin;
@@ -56,8 +56,10 @@ public class EnemySpawner : MonoBehaviour {
 		float rightEdgeOfFormation = transform.position.x + (0.5f * width);
 		float leftEdgeOfFormation = transform.position.x - (0.5f * width);
 
-		if (leftEdgeOfFormation < xmin || rightEdgeOfFormation > xmax) {
-			movingRight = !movingRight;
+		if (leftEdgeOfFormation < xmin) {
+			movingRight = true;
+		} else if (rightEdgeOfFormation > xmax) {
+			movingRight = false;
 		}
 	}
 }
