@@ -18,8 +18,9 @@ public class PlayerControler : MonoBehaviour {
 		restrictPosition ();
 	}
 
-	void restrictPosition() {
+	void restrictPosition () {
 		float distance = transform.position.z - Camera.main.transform.position.z;
+
 		Vector3 leftmost = Camera.main.ViewportToWorldPoint (new Vector3 (0, 0, distance));
 		Vector3 rightmost = Camera.main.ViewportToWorldPoint (new Vector3 (1, 0, distance));
 		Vector3 upmost = Camera.main.ViewportToWorldPoint (new Vector3 (0, 1, distance));
@@ -37,7 +38,7 @@ public class PlayerControler : MonoBehaviour {
 		shootProjectile ();
 	}
 
-	void movement() {
+	void movement () {
 		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A)) { // Left movement
 			gameObject.transform.position += Vector3.left * speed * Time.deltaTime;
 		} else if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D)) { // Right movement
@@ -53,6 +54,7 @@ public class PlayerControler : MonoBehaviour {
 		// Restrict the player to the gamespace
 		float newX = Mathf.Clamp (transform.position.x, xmin, xmax);
 		float newY = Mathf.Clamp (transform.position.y, ymin, ymax);
+
 		transform.position = new Vector3 (newX, newY, transform.position.z);
 	}
 
