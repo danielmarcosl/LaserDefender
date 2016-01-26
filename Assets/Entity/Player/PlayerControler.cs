@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerControler : MonoBehaviour {
 
+	public float speed = 10.0f;
 	public GameObject projectile;
 	public float projectileSpeed;
 	public float firingRate = 0.2f;
@@ -37,8 +38,6 @@ public class PlayerControler : MonoBehaviour {
 	}
 
 	void movement() {
-		float speed = 10.0f;
-
 		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A)) { // Left movement
 			gameObject.transform.position += Vector3.left * speed * Time.deltaTime;
 		} else if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D)) { // Right movement
