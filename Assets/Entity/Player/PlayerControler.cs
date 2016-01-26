@@ -3,6 +3,10 @@ using System.Collections;
 
 public class PlayerControler : MonoBehaviour {
 
+	public GameObject projectile;
+	public float projectileSpeed;
+	public float firingRate = 0.2f;
+
 	float xmin;
 	float xmax;
 	float ymin;
@@ -29,6 +33,7 @@ public class PlayerControler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		movement ();
+		shootProjectile ();
 	}
 
 	void movement() {
@@ -50,5 +55,19 @@ public class PlayerControler : MonoBehaviour {
 		float newX = Mathf.Clamp (transform.position.x, xmin, xmax);
 		float newY = Mathf.Clamp (transform.position.y, ymin, ymax);
 		transform.position = new Vector3 (newX, newY, transform.position.z);
+	}
+
+	void shootProjectile () {
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			InvokeRepeating ("Fire", 0.000001f, firingRate);
+		}
+		if (Input.GetKeyUp(KeyCode.Space)) {
+			CancelInvoke("Fire");
+		}
+	}
+
+	void Fire () {
+		GameObject beam = Instantiate (projectile, transform.position, Quaternion.identity) as GameObject;
+		beam.GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, projectileSpeed,0);
 	}
 }
