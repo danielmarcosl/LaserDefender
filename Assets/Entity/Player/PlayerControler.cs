@@ -3,10 +3,11 @@ using System.Collections;
 
 public class PlayerControler : MonoBehaviour {
 
-	public float speed = 10.0f;
 	public GameObject projectile;
+	public float health;
+	public float speed;
 	public float projectileSpeed;
-	public float firingRate = 0.2f;
+	public float firingRate;
 
 	private float xmin;
 	private float xmax;
@@ -70,5 +71,17 @@ public class PlayerControler : MonoBehaviour {
 	void Fire () {
 		GameObject beam = Instantiate (projectile, transform.position, Quaternion.identity) as GameObject;
 		beam.GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, projectileSpeed,0);
+	}
+
+	void OnTriggerEnter2D (Collider2D col) {
+		Projectile missile = col.gameObject.GetComponent<Projectile> ();
+
+		if (missile) {
+			health -= missile.GetDamage ();
+			missile.Hit ();
+			if (health <= 0) {
+				Destroy (gameObject);
+			}
+		}
 	}
 }
