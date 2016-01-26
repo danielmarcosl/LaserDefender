@@ -27,6 +27,7 @@ public class EnemySpawner : MonoBehaviour {
 
 	public void setBoundaries () {
 		float distanceToCamera = transform.position.z - Camera.main.transform.position.z;
+
 		Vector3 leftBoundary = Camera.main.ViewportToWorldPoint (new Vector3 (0, 0, distanceToCamera));
 		Vector3 rightBoundary = Camera.main.ViewportToWorldPoint (new Vector3 (1, 0, distanceToCamera));
 
@@ -35,7 +36,7 @@ public class EnemySpawner : MonoBehaviour {
 	}
 
 	public void OnDrawGizmos () {
-		Gizmos.DrawWireCube(transform.position, new Vector3(width, height));
+		Gizmos.DrawWireCube (transform.position, new Vector3 (width, height));
 	}
 	
 	// Update is called once per frame
@@ -52,7 +53,7 @@ public class EnemySpawner : MonoBehaviour {
 		}
 	}
 
-	public void changeDirection() {
+	public void changeDirection () {
 		float rightEdgeOfFormation = transform.position.x + (0.5f * width);
 		float leftEdgeOfFormation = transform.position.x - (0.5f * width);
 
