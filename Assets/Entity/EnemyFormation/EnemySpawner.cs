@@ -3,14 +3,14 @@ using System.Collections;
 
 public class EnemySpawner : MonoBehaviour {
 
-	public GameObject enemyPrefab;
-	public float width;
-	public float height;
-	public float speed;
+	public GameObject enemyPrefab; // Enemy prefab object
+	public float width; // width of the square of the enemy formation
+	public float height; // height of the square of the enemy formation
+	public float speed; // speed of the enemy formation
 
-	private bool movingRight = true;
-	private float xmin;
-	private float xmax;
+	private bool movingRight = true; // 
+	private float xmin; // left border of the screen
+	private float xmax; // right border of the screen
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +18,9 @@ public class EnemySpawner : MonoBehaviour {
 		instantiateEnemies ();
 	}
 
+	/**
+	 * Spawn the enemies in the positions
+	 */
 	public void instantiateEnemies () {
 		foreach (Transform child in transform) {
 			GameObject enemy = Instantiate (enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
@@ -25,6 +28,9 @@ public class EnemySpawner : MonoBehaviour {
 		}
 	}
 
+	/*
+	 * Set the left and right borders of the screen
+	 */
 	public void setBoundaries () {
 		float distanceToCamera = transform.position.z - Camera.main.transform.position.z;
 
@@ -35,6 +41,9 @@ public class EnemySpawner : MonoBehaviour {
 		xmax = rightBoundary.x;
 	}
 
+	/*
+	 * Draw the square of the enemy formation
+	 */
 	public void OnDrawGizmos () {
 		Gizmos.DrawWireCube (transform.position, new Vector3 (width, height));
 	}
@@ -43,8 +52,15 @@ public class EnemySpawner : MonoBehaviour {
 	void Update () {
 		enemyMovement ();
 		changeDirection ();
+
+		if (AllMembersDead ()) {
+			instantiateEnemies ();
+		}
 	}
 
+	/*
+	 * Movement of the emeny formation
+	 */
 	public void enemyMovement () {
 		if (movingRight) {
 			transform.position += Vector3.right * speed * Time.deltaTime;
@@ -53,6 +69,9 @@ public class EnemySpawner : MonoBehaviour {
 		}
 	}
 
+	/*
+	 * If the formation reach a border of the screen, change the direction
+	 */
 	public void changeDirection () {
 		float rightEdgeOfFormation = transform.position.x + (0.5f * width);
 		float leftEdgeOfFormation = transform.position.x - (0.5f * width);
@@ -62,12 +81,11 @@ public class EnemySpawner : MonoBehaviour {
 		} else if (rightEdgeOfFormation > xmax) {
 			movingRight = false;
 		}
-
-		if (AllMembersDead ()) {
-			instantiateEnemies ();
-		}
 	}
 
+	/*
+	 * Boolean that controls if there's an enemy left
+	 */
 	bool AllMembersDead() {
 		foreach (Transform childPositionGameObject in transform) {
 			if (childPositionGameObject.childCount > 0) {
