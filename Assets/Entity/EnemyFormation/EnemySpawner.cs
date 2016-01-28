@@ -4,27 +4,44 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour {
 
 	public GameObject enemyPrefab; // Enemy prefab object
-	public float width; // width of the square of the enemy formation
-	public float height; // height of the square of the enemy formation
-	public float speed; // speed of the enemy formation
+	public float width; // Width of the square of the enemy formation
+	public float height; // Height of the square of the enemy formation
+	public float speed; // Speed of the enemy formation
+	public float spawnDelay; // Time between the spawn of two enemies
 
-	private bool movingRight = true; // 
-	private float xmin; // left border of the screen
-	private float xmax; // right border of the screen
+	private bool movingRight = true; // Movement direction true = right, false = left
+	private float xmin; // Left border of the screen
+	private float xmax; // Right border of the screen
 
 	// Use this for initialization
 	void Start () {
 		setBoundaries ();
-		instantiateEnemies ();
+		//instantiateEnemies ();
+		SpawnUntilFull ();
 	}
 
 	/**
-	 * Spawn the enemies in the positions
+	 * Spawn all the enemies at the same time in the positions
 	 */
 	public void instantiateEnemies () {
 		foreach (Transform child in transform) {
 			GameObject enemy = Instantiate (enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
 			enemy.transform.parent = child;
+		}
+	}
+
+	/**
+	 * Spawn a single enemy in a free position
+	 */
+	void SpawnUntilFull() {
+		Transform freePosition = NextFreePosition ();
+
+		if (freePosition) {
+			GameObject enemy = Instantiate (enemyPrefab, freePosition.position, Quaternion.identity) as GameObject;
+			enemy.transform.parent = freePosition;
+		}
+		if (NextFreePosition()) {
+			Invoke ("SpawnUntilFull", spawnDelay); // Recall this function in a 'spawnDelay' time
 		}
 	}
 
@@ -54,7 +71,7 @@ public class EnemySpawner : MonoBehaviour {
 		changeDirection ();
 
 		if (AllMembersDead ()) {
-			instantiateEnemies ();
+			SpawnUntilFull ();
 		}
 	}
 
@@ -81,6 +98,15 @@ public class EnemySpawner : MonoBehaviour {
 		} else if (rightEdgeOfFormation > xmax) {
 			movingRight = false;
 		}
+	}
+
+	Transform NextFreePosition() {
+		foreach (Transform childPositionGameObject in transform) {
+			if (childPositionGameObject.childCount == 0) {
+				return childPositionGameObject;
+			}
+		}
+		return null;
 	}
 
 	/*
