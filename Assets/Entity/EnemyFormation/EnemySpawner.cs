@@ -62,5 +62,18 @@ public class EnemySpawner : MonoBehaviour {
 		} else if (rightEdgeOfFormation > xmax) {
 			movingRight = false;
 		}
+
+		if (AllMembersDead ()) {
+			instantiateEnemies ();
+		}
+	}
+
+	bool AllMembersDead() {
+		foreach (Transform childPositionGameObject in transform) {
+			if (childPositionGameObject.childCount > 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
