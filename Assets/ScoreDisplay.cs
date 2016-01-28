@@ -7,7 +7,7 @@ public class ScoreDisplay : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Text myText = GetComponent<Text> ();
-		myText.text = ScoreKeeper.score.ToString ();
+		myText.text = "Score: " + ScoreKeeper.score.ToString ();
 		ScoreKeeper.Reset ();
 	}
 	
